@@ -17,6 +17,30 @@ These are opinions (and as such are debatable) so this is not supposed to be the
 
 ## Usage
 
+### Add Dependency
+
+[JitPack](https://jitpack.io) can be used to add restop dependency:
+
+1. add the JitPack repository
+
+    ```xml
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+    ```
+
+1. add the dependency
+    ```xml
+        <dependency>
+            <groupId>com.github.mrizzi</groupId>
+            <artifactId>restop</artifactId>
+            <version>master-SNAPSHOT</version>
+        </dependency>
+    ```
+
 ### Read endpoints
 
 Let's start with the `Fruit` entity referenced in many Quarkus guides.  
