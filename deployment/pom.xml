@@ -40,7 +40,7 @@
         </dependency>
         <dependency>
             <groupId>org.restop</groupId>
-            <artifactId>restop-crud</artifactId>
+            <artifactId>restop</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
