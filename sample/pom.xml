@@ -37,6 +37,15 @@
         </dependencies>
     </dependencyManagement>
 
+<!-- uncomment to use restop as a Maven dependency
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+-->
+
     <dependencies>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -55,6 +64,14 @@
             <artifactId>restop</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+<!-- uncomment to use restop as a Maven dependency
+    (removing the above Maven dependency org.restop:restop)
+        <dependency>
+            <groupId>com.github.mrizzi</groupId>
+            <artifactId>restop</artifactId>
+            <version>master-SNAPSHOT</version>
+        </dependency>
+-->
 
         <!-- Testing: -->
         <dependency>
