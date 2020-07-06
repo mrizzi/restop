@@ -1,4 +1,4 @@
-package org.restop.sample;
+package org.restop.sample.pojo;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.runtime.annotations.RegisterForReflection;

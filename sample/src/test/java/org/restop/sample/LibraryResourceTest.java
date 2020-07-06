@@ -4,6 +4,8 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
+import org.restop.sample.pojo.Author;
+import org.restop.sample.pojo.Book;
 
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;

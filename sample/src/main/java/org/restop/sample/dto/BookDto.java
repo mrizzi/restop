@@ -1,6 +1,7 @@
-package org.restop.sample;
+package org.restop.sample.dto;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
+import org.restop.sample.pojo.Author;
 
 import javax.json.bind.annotation.JsonbCreator;
 
