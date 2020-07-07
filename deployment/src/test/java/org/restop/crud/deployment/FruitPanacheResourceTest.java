@@ -52,7 +52,7 @@ public class FruitPanacheResourceTest {
                         "links.size()", is(2));
     }
 
-/*    @Test
+    @Test
     public void testReadAllPaginated() {
         RestAssured
                 .given()
@@ -68,7 +68,7 @@ public class FruitPanacheResourceTest {
                         "meta.limit", is(10),
                         "meta.sortBy", is("id:Ascending"),
                         "links.size()", is(2));
-    }*/
+    }
 
     @Test
     public void testReadAllPaginatedSortBy() {

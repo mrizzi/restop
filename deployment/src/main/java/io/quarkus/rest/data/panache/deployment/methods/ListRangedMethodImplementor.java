@@ -29,7 +29,7 @@ import java.util.Map;
 
 import static io.quarkus.gizmo.MethodDescriptor.ofMethod;
 
-public final class ListPaginatedMethodImplementor extends StandardMethodImplementor {
+public final class ListRangedMethodImplementor extends StandardMethodImplementor {
 
     public static final String NAME = "readPaginatedByRange";
 
@@ -74,7 +74,7 @@ public final class ListPaginatedMethodImplementor extends StandardMethodImplemen
         addDefaultValueAnnotation(methodCreator.getParameterAnnotations(2), "id:Ascending");
         addQueryParamAnnotation(methodCreator.getParameterAnnotations(3), "where");
         addDefaultValueAnnotation(methodCreator.getParameterAnnotations(3), "");
-        addAnnotation(methodCreator.getParameterAnnotations(4), Context.class);
+        methodCreator.getParameterAnnotations(4).addAnnotation(Context.class);
         addPathAnnotation(methodCreator, propertiesAccessor.getPath(resourceInfo.getClassInfo(), methodMetadata));
         addProducesAnnotation(methodCreator, APPLICATION_JSON);
         //addLinksAnnotation(methodCreator, resourceInfo.getEntityClassName(), REL);
@@ -97,11 +97,12 @@ public final class ListPaginatedMethodImplementor extends StandardMethodImplemen
 
         AssignableResultHandle links = createLinks(methodCreator, count);
 
+        AssignableResultHandle lastIndexInRange = createLastIndex(methodCreator, methodCreator.getMethodParam(0), methodCreator.getMethodParam(1));
+        ResultHandle panacheQueryWithRange = methodCreator.invokeInterfaceMethod(ofMethod(PanacheQuery.class, "range", PanacheQuery.class, int.class, int.class),
+                panacheQuery, methodCreator.getMethodParam(1), lastIndexInRange);
         ResultHandle pagination = methodCreator.newInstance(MethodDescriptor.ofConstructor(Pagination.class, Meta.class, Links.class, List.class),
                 meta, links, 
-                methodCreator.invokeInterfaceMethod(ofMethod(PanacheQuery.class, "list", List.class), panacheQuery));
-/*                        methodCreator.invokeInterfaceMethod(ofMethod(PanacheQuery.class, "range", PanacheQuery.class, int.class, int.class), 
-                                panacheQuery, methodCreator.getMethodParam(1), methodCreator.getMethodParam(1). + methodCreator.getMethodParam(0) - 1)));*/
+                methodCreator.invokeInterfaceMethod(ofMethod(PanacheQuery.class, "list", List.class), panacheQueryWithRange));
 
         methodCreator.returnValue(pagination);
         methodCreator.close();
@@ -109,23 +110,15 @@ public final class ListPaginatedMethodImplementor extends StandardMethodImplemen
 
     @Override
     protected MethodMetadata getMethodMetadata(RestDataResourceInfo resourceInfo) {
-        return new MethodMetadata(NAME, Integer.class.getName(), Integer.class.getName(), String.class.getName(), String.class.getName(), UriInfo.class.getName());
+        return new MethodMetadata(NAME, int.class.getName(), int.class.getName(), String.class.getName(), String.class.getName(), UriInfo.class.getName());
     }
 
     void addQueryParamAnnotation(AnnotatedElement element, String value) {
-        addAnnotation(element, QueryParam.class, value);
+        element.addAnnotation(QueryParam.class).addValue("value", value);
     }
 
     void addDefaultValueAnnotation(AnnotatedElement element, String value) {
-        addAnnotation(element, DefaultValue.class, value);
-    }
-
-    void addAnnotation(AnnotatedElement element, Class annotation, String value) {
-        addAnnotation(element, annotation).addValue("value", value);
-    }
-
-    AnnotationCreator addAnnotation(AnnotatedElement element, Class annotation) {
-        return element.addAnnotation(annotation);
+        element.addAnnotation(DefaultValue.class).addValue("value", value);
     }
 
     AssignableResultHandle createFilter(MethodCreator methodCreator) {
@@ -153,5 +146,12 @@ public final class ListPaginatedMethodImplementor extends StandardMethodImplemen
         linksBuilder = methodCreator.invokeVirtualMethod(ofMethod(LinksBuilder.class, "andCount", LinksBuilder.class, long.class), linksBuilder, count);
         methodCreator.assign(links, methodCreator.invokeVirtualMethod(ofMethod(LinksBuilder.class, "build", Links.class), linksBuilder));
         return links;
+    }
+
+    AssignableResultHandle createLastIndex(MethodCreator methodCreator, ResultHandle limit, ResultHandle offset) {
+        AssignableResultHandle lastIndex = methodCreator.createVariable(int.class);
+        ResultHandle sum = methodCreator.invokeStaticMethod(ofMethod(Math.class, "addExact", int.class, int.class, int.class), limit, offset);
+        methodCreator.assign(lastIndex, methodCreator.invokeStaticMethod(ofMethod(Math.class, "subtractExact", int.class, int.class, int.class), sum, methodCreator.load(1)));
+        return lastIndex;
     }
 }

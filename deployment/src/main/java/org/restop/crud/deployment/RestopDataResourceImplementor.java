@@ -4,7 +4,7 @@ import io.quarkus.deployment.util.HashUtil;
 import io.quarkus.gizmo.ClassCreator;
 import io.quarkus.gizmo.ClassOutput;
 import io.quarkus.rest.data.panache.deployment.RestDataResourceInfo;
-import io.quarkus.rest.data.panache.deployment.methods.ListPaginatedMethodImplementor;
+import io.quarkus.rest.data.panache.deployment.methods.ListRangedMethodImplementor;
 import io.quarkus.rest.data.panache.deployment.methods.MethodImplementor;
 import io.quarkus.rest.data.panache.deployment.properties.MethodPropertiesAccessor;
 import io.quarkus.rest.data.panache.deployment.properties.ResourcePropertiesAccessor;
@@ -20,7 +20,7 @@ class RestopDataResourceImplementor {
     private static final Logger LOGGER = Logger.getLogger(RestopDataResourceImplementor.class);
 
     private static final List<MethodImplementor> STANDARD_METHOD_IMPLEMENTORS = Arrays.asList(
-            new ListPaginatedMethodImplementor());
+            new ListRangedMethodImplementor());
 
     private static final List<MethodImplementor> HAL_METHOD_IMPLEMENTORS = Arrays.asList();
 
