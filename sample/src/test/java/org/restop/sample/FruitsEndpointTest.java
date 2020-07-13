@@ -63,7 +63,7 @@ public class FruitsEndpointTest {
     public void testReadAllPaginatedSortBy() {
         Response response = RestAssured
                 .given()
-                .queryParam("sort_by", "name:Ascending")
+                .queryParam("sort", "name:Ascending")
                 .when().get("/fruits")
                 .then().statusCode(200)
                 .extract()

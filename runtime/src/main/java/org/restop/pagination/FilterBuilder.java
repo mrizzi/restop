@@ -43,8 +43,10 @@ public class FilterBuilder {
             }
         } else {
             uriInfo.getQueryParameters(true).forEach((key, values) -> {
-                if (!(ReadablePaginatedByRange.QUERY_PARAM_LIMIT.equals(key) || 
-                        "offset".equals(key) || "sort_by".equals(key) || "where".equals(key))) {
+                if (!(ReadablePaginatedByRange.QUERY_PARAM_LIMIT.equals(key) ||
+                        ReadablePaginatedByRange.QUERY_PARAM_OFFSET.equals(key) ||
+                        ReadablePaginatedByRange.QUERY_PARAM_SORT.equals(key) ||
+                        ReadablePaginatedByRange.QUERY_PARAM_WHERE.equals(key))) {
                     if (queryBuilder.length() != 0) queryBuilder.append(" and ");
                     queryBuilder.append(key);
                     queryBuilder.append(" in :");
