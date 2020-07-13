@@ -29,8 +29,8 @@ public interface ReadablePaginatedByRangeWithDto<E extends PanacheEntity, DTO> e
     String DEFAULT_VALUE_LIMIT = "25";
     String QUERY_PARAM_OFFSET = "offset";
     String DEFAULT_VALUE_OFFSET = "0";
-    String QUERY_PARAM_SORT_BY = "sort_by";
-    String DEFAULT_VALUE_SORT_BY = "id:Ascending";
+    String QUERY_PARAM_SORT = "sort";
+    String DEFAULT_VALUE_SORT = "id:Ascending";
     String QUERY_PARAM_WHERE = "where";
     String DEFAULT_VALUE_WHERE = "";
 
@@ -40,7 +40,7 @@ public interface ReadablePaginatedByRangeWithDto<E extends PanacheEntity, DTO> e
     @Transactional(SUPPORTS)
     default Response readPaginatedByRange(@QueryParam(QUERY_PARAM_LIMIT) @DefaultValue(DEFAULT_VALUE_LIMIT) int limit,
                                           @QueryParam(QUERY_PARAM_OFFSET) @DefaultValue(DEFAULT_VALUE_OFFSET) int offset,
-                                          @QueryParam(QUERY_PARAM_SORT_BY) @DefaultValue(DEFAULT_VALUE_SORT_BY) String sortBy,
+                                          @QueryParam(QUERY_PARAM_SORT) @DefaultValue(DEFAULT_VALUE_SORT) String sortBy,
                                           @QueryParam(QUERY_PARAM_WHERE) @DefaultValue(DEFAULT_VALUE_WHERE) String where,
                                           @Context UriInfo uriInfo) throws Exception
     {
