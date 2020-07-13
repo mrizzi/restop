@@ -84,7 +84,8 @@ The `/fruit` endpoint will be able to provide responses to calls:
 * *read one*: `GET` request to `/fruit/{id}` endpoint with a single `Fruit` result
 * *read many "first page"*: `GET` request to `/fruit` endpoint with an ordered (by ID) list of `Fruit` results using default (and opinionated) values for `limit` (i.e. `25`) and `offset` (i.e. `0`) parameters
 * *read many "n-th page"*:`GET` request to `/fruit?limit=10&offset=20` endpoint with an ordered (by ID) list of (up to 10) `Fruit` results starting for the 20th element 
-* *read many with sorting*:`GET` request to `/fruit?sort=name:Ascending` endpoint with an ordered by Fruit's `name` field ascending list of (up to 25) `Fruit` results starting for first element. Note that sorting works on multiple fields using the syntax `sort=field1:asc,field2:desc`. `a`, `asc` and `ascending` can be used for ascending direction (it's the default and fallback one) and `d`, `desc` and `descending` for descending direction  
+* *read many with sorting*:`GET` request to `/fruit?sort=name:Ascending` endpoint with an ordered by Fruit's `name` field ascending list of (up to 25) `Fruit` results starting for first element. Note that sorting works on multiple fields using the syntax `sort=field1:asc,field2:desc`.  
+`a`, `asc` and `ascending` can be used for ascending direction (it's the default and fallback direction) and `d`, `desc` and `descending` for descending direction  
 * *read many with "equals" filter*:`GET` request to `/fruit?name=Banana` endpoint with an ordered (by ID) list of (up to 25) `Fruit` results whose `name` field value is `Banana`
 * *read many with "in" filter*:`GET` request to `/fruit?name=Banana&name=Apple&name=Kiwi` endpoint with an ordered (by ID) list of (up to 25) `Fruit` results whose `name` field value is `Banana` or `Apple` or `Kiwi`
 
