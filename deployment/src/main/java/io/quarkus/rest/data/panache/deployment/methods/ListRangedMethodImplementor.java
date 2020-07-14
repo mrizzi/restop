@@ -43,7 +43,7 @@ public final class ListRangedMethodImplementor extends StandardMethodImplementor
      *     @Transactional
      *     Pagination readPaginatedByRange(@QueryParam(QUERY_PARAM_LIMIT) @DefaultValue(DEFAULT_VALUE_LIMIT) int limit,
      *                                           @QueryParam(QUERY_PARAM_OFFSET) @DefaultValue(DEFAULT_VALUE_OFFSET) int offset,
-     *                                           @QueryParam(QUERY_PARAM_SORT_BY) @DefaultValue(DEFAULT_VALUE_SORT_BY) String sortBy,
+     *                                           @QueryParam(QUERY_PARAM_SORT) @DefaultValue(DEFAULT_VALUE_SORT) String sortBy,
      *                                           @QueryParam(QUERY_PARAM_WHERE) @DefaultValue(DEFAULT_VALUE_WHERE) String where,
      *                                           @Context UriInfo uriInfo) throws Exception
      *     {
@@ -70,7 +70,7 @@ public final class ListRangedMethodImplementor extends StandardMethodImplementor
         addDefaultValueAnnotation(methodCreator.getParameterAnnotations(0), "25");
         addQueryParamAnnotation(methodCreator.getParameterAnnotations(1), "offset");
         addDefaultValueAnnotation(methodCreator.getParameterAnnotations(1), "0");
-        addQueryParamAnnotation(methodCreator.getParameterAnnotations(2), "sort_by");
+        addQueryParamAnnotation(methodCreator.getParameterAnnotations(2), "sort");
         addDefaultValueAnnotation(methodCreator.getParameterAnnotations(2), "id:Ascending");
         addQueryParamAnnotation(methodCreator.getParameterAnnotations(3), "where");
         addDefaultValueAnnotation(methodCreator.getParameterAnnotations(3), "");
