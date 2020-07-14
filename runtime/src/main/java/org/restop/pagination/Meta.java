@@ -4,7 +4,7 @@ public class Meta {
     public long count;
     public int limit;
     public int offset;
-    public String sortBy;
+    public String sort;
 
     private Meta() {}
 
@@ -24,8 +24,8 @@ public class Meta {
         return this;
     }
 
-    public Meta andSortBy(String sortBy) {
-        this.sortBy = sortBy;
+    public Meta andSort(String sort) {
+        this.sort = sort;
         return this;
     }
 }
