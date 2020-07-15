@@ -20,7 +20,7 @@ public class LibraryResourceTest {
                         "meta.count", is(1),
                         "meta.offset", is(0),
                         "meta.limit", is(25),
-                        "meta.sortBy", is("id:Ascending"),
+                        "meta.sort", is("id:Ascending"),
                         "links.size()", is(2),
                         "data.firstName", contains("John"),
                         "data.lastName", contains("Irving"));
@@ -107,7 +107,7 @@ public class LibraryResourceTest {
                         "meta.count", is(1),
                         "meta.offset", is(0),
                         "meta.limit", is(25),
-                        "meta.sortBy", is("id:Ascending"),
+                        "meta.sort", is("id:Ascending"),
                         "links.size()", is(2),
                         "data.title", contains("Therapy"));
 

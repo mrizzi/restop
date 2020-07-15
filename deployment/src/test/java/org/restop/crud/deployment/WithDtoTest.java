@@ -48,7 +48,7 @@ public class WithDtoTest {
                         "meta.count", is(3),
                         "meta.offset", is(0),
                         "meta.limit", is(25),
-                        "meta.sortBy", is("id:Ascending"),
+                        "meta.sort", is("id:Ascending"),
                         "links.size()", is(2));
     }
 
@@ -66,12 +66,12 @@ public class WithDtoTest {
                         "meta.count", is(3),
                         "meta.offset", is(1),
                         "meta.limit", is(10),
-                        "meta.sortBy", is("id:Ascending"),
+                        "meta.sort", is("id:Ascending"),
                         "links.size()", is(2));
     }
 
     @Test
-    public void testReadAllPaginatedSortBy() {
+    public void testReadAllPaginatedSort() {
         Response response = RestAssured
                 .given()
                 .queryParam("sort", "name:Ascending")

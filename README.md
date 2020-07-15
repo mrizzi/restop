@@ -119,7 +119,7 @@ Here is an example of a "paginated" response (for the `GET` request to `/fruit?s
         "count": 3,
         "limit": 25,
         "offset": 0,
-        "sortBy": "name:Ascending"
+        "sort": "name:Ascending"
     }
 }
 ```
