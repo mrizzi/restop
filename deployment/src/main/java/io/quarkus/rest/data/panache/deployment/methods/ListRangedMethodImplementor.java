@@ -47,13 +47,13 @@ public final class ListRangedMethodImplementor extends StandardMethodImplementor
      *                                           @QueryParam(QUERY_PARAM_WHERE) @DefaultValue(DEFAULT_VALUE_WHERE) String where,
      *                                           @Context UriInfo uriInfo) throws Exception
      *     {
-     *         Sort sort = SortBuilder.sortBy(sortBy);
+     *         Sort sort = SortBuilder.sort(sortBy);
      *         Filter filter = FilterBuilder.withUriInfo(uriInfo).andWhere(where).build();
      *         @SuppressWarnings("unchecked")
      *         PanacheQuery<E> query = (PanacheQuery<E>) getPanacheEntityType().getMethod("find", String.class, Sort.class, Map.class)
      *                 .invoke(null, filter.getQuery(), sort, filter.getParameters());
      *         long count = query.count();
-     *         Meta meta = Meta.withCount(count).andLimit(limit).andOffset(offset).andSortBy(sortBy);
+     *         Meta meta = Meta.withCount(count).andLimit(limit).andOffset(offset).andSort(sortBy);
      *         Links links = LinksBuilder.withBasePath(uriInfo).andLimit(limit).andOffset(offset).andCount(count).build();
      *         return new Pagination<>(meta, links, query.range(offset, offset + limit - 1).list());
      *     }
@@ -80,7 +80,7 @@ public final class ListRangedMethodImplementor extends StandardMethodImplementor
         //addLinksAnnotation(methodCreator, resourceInfo.getEntityClassName(), REL);
 
         AssignableResultHandle sort = methodCreator.createVariable(Sort.class);
-        methodCreator.assign(sort, methodCreator.invokeStaticMethod(ofMethod(SortBuilder.class, "sortBy", Sort.class, String.class), methodCreator.getMethodParam(2)));
+        methodCreator.assign(sort, methodCreator.invokeStaticMethod(ofMethod(SortBuilder.class, "sort", Sort.class, String.class), methodCreator.getMethodParam(2)));
 
         AssignableResultHandle filter = createFilter(methodCreator);
 
@@ -134,7 +134,7 @@ public final class ListRangedMethodImplementor extends StandardMethodImplementor
         ResultHandle metaBuilder = methodCreator.invokeStaticMethod(ofMethod(Meta.class, "withCount", Meta.class, long.class), count);
         metaBuilder = methodCreator.invokeVirtualMethod(ofMethod(Meta.class, "andLimit", Meta.class, int.class), metaBuilder, methodCreator.getMethodParam(0));
         metaBuilder = methodCreator.invokeVirtualMethod(ofMethod(Meta.class, "andOffset", Meta.class, int.class), metaBuilder, methodCreator.getMethodParam(1));
-        methodCreator.assign(meta, methodCreator.invokeVirtualMethod(ofMethod(Meta.class, "andSortBy", Meta.class, String.class), metaBuilder, methodCreator.getMethodParam(2)));
+        methodCreator.assign(meta, methodCreator.invokeVirtualMethod(ofMethod(Meta.class, "andSort", Meta.class, String.class), metaBuilder, methodCreator.getMethodParam(2)));
         return meta;
     }
 
