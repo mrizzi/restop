@@ -1,4 +1,4 @@
-package org.restop.sample;
+package org.restop.sample.resource;
 
 import org.restop.crud.Creatable;
 import org.restop.crud.Deletable;
@@ -6,6 +6,7 @@ import org.restop.crud.ReadableById;
 import org.restop.crud.ReadablePaginatedByRange;
 import org.restop.crud.UpdatableWithDto;
 import org.restop.mapper.Mapper;
+import org.restop.sample.pojo.Fruit;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Path;

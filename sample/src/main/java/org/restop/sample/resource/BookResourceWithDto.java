@@ -1,7 +1,9 @@
-package org.restop.sample;
+package org.restop.sample.resource;
 
 import org.restop.crud.CreatableWithDto;
 import org.restop.mapper.Mapper;
+import org.restop.sample.dto.BookDto;
+import org.restop.sample.pojo.Book;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Path;

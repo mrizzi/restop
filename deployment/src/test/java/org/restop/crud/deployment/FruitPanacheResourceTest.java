@@ -1,36 +1,46 @@
-package org.restop.sample;
+package org.restop.crud.deployment;
 
-import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.QuarkusUnitTest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.hamcrest.Matchers;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.jupiter.api.Test;
-import org.restop.sample.pojo.Fruit;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.restop.crud.deployment.pojo.Fruit;
+import org.restop.crud.deployment.rest.FruitPanacheResource;
 
-import static org.hamcrest.Matchers.containsInRelativeOrder;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
-@QuarkusTest
-public class FruitsEndpointTest {
+public class FruitPanacheResourceTest {
+
+    @RegisterExtension
+    static final QuarkusUnitTest config = new QuarkusUnitTest()
+            .setArchiveProducer(() -> 
+                    ShrinkWrap.create(JavaArchive.class)
+                    .addClasses(Fruit.class, FruitPanacheResource.class)
+                    .addAsResource("import.sql")
+                    .addAsResource("application.properties")
+            );
 
     @Test
     public void testReadOne() {
         RestAssured
                 .given()
                 .pathParam("id", 1)
-                .when().get("/fruits/{id}")
+                .when().get("/fruit-panache/{id}")
                 .then()
                 .statusCode(200)
                 .body("id", is(1),
-                        "name", is("Cherry"));
+                    "name", is("Cherry"));
     }
 
     @Test
     public void testReadAll() {
         RestAssured
                 .given()
-                .when().get("/fruits")
+                .when().get("/fruit-panache")
                 .then()
                 .statusCode(200)
                 .body("data.size()", is(3),
@@ -48,7 +58,7 @@ public class FruitsEndpointTest {
                 .given()
                 .queryParam("limit", "10")
                 .queryParam("offset", "1")
-                .when().get("/fruits")
+                .when().get("/fruit-panache")
                 .then()
                 .statusCode(200)
                 .body("data.size()", is(2),
@@ -65,7 +75,7 @@ public class FruitsEndpointTest {
         Response response = RestAssured
                 .given()
                 .queryParam("sort", "name:Ascending")
-                .when().get("/fruits")
+                .when().get("/fruit-panache")
                 .then().statusCode(200)
                 .extract()
                 .response();
@@ -79,17 +89,17 @@ public class FruitsEndpointTest {
                 .queryParam("name", "Banana")
                 .queryParam("name", "Apple")
                 .queryParam("name", "Kiwi")
-                .when().get("/fruits")
+                .when().get("/fruit-panache")
                 .then().statusCode(200).body(
-                Matchers.not(Matchers.containsString("Cherry")),
-                Matchers.containsString("Apple"),
-                Matchers.containsString("Banana")
+                not(containsString("Cherry")),
+                containsString("Apple"),
+                containsString("Banana")
         );
 
         Response response = RestAssured
                 .given()
                 .queryParam("where", "name:Banana")
-                .when().get("/fruits")
+                .when().get("/fruit-panache")
                 .then().statusCode(200)
                 .extract()
                 .response();
@@ -98,20 +108,17 @@ public class FruitsEndpointTest {
 
     @Test
     public void testCreateAndDelete() {
-        Fruit kiwi = new Fruit("kiwi");
-
-        Integer kiwiId = RestAssured
+        Fruit kiwi = new Fruit("kiwi", "It's an edible berry");
+        Response response = RestAssured
                 .given().contentType(ContentType.JSON).body(kiwi)
-                .when().post("/fruits")
+                .when().post("/fruit-panache")
                 .then().statusCode(201)
                 .extract()
-                .path("id");
-        System.out.println("ID = " + kiwiId);
+                .response();
+        System.out.println(response.asString());
 
-        Response response = RestAssured
-                .given()
-                .pathParam("id", kiwiId)
-                .when().delete("/fruits/{id}")
+        response = RestAssured
+                .when().delete("/fruit-panache/4")
                 .then().statusCode(204)
                 .extract()
                 .response();
@@ -120,22 +127,20 @@ public class FruitsEndpointTest {
 
     @Test
     public void testUpdate() {
-        Fruit mango = new Fruit("Mango");
+        Fruit mango = new Fruit("Mango", "Tropical Fruit.");
         RestAssured
                 .given()
                 .pathParam("id", 2)
                 .contentType(ContentType.JSON)
                 .body(mango)
-                .when().put("/fruits/{id}")
+                .when().put("/fruit-panache/{id}")
                 .then()
-                .statusCode(200)
-                .body("id", is(2),
-                        "name", is("Mango"));
+                .statusCode(204);
 
         RestAssured
                 .given()
                 .pathParam("id", 2)
-                .when().get("/fruits/{id}")
+                .when().get("/fruit-panache/{id}")
                 .then()
                 .statusCode(200)
                 .body("id", is(2),
@@ -144,7 +149,8 @@ public class FruitsEndpointTest {
 
     @Test
     public void testNotFound() {
-        RestAssured.when().get("/fruits/999").then().statusCode(404);
-        RestAssured.when().delete("/fruits/999").then().statusCode(404);
+        RestAssured.when().get("/fruit-panache/999").then().statusCode(404);
+        RestAssured.when().delete("/fruit-panache/999").then().statusCode(404);
     }
+
 }

@@ -1,4 +1,4 @@
-package org.restop.sample;
+package org.restop.sample.dto;
 
 import javax.json.bind.annotation.JsonbCreator;
 
