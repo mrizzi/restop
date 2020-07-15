@@ -47,7 +47,7 @@ public final class ListRangedMethodImplementor extends StandardMethodImplementor
      *                                           @QueryParam(QUERY_PARAM_WHERE) @DefaultValue(DEFAULT_VALUE_WHERE) String where,
      *                                           @Context UriInfo uriInfo) throws Exception
      *     {
-     *         Sort sort = SortBuilder.sort(sortBy);
+     *         Sort sort = SortBuilder.build(sortBy);
      *         Filter filter = FilterBuilder.withUriInfo(uriInfo).andWhere(where).build();
      *         @SuppressWarnings("unchecked")
      *         PanacheQuery<E> query = (PanacheQuery<E>) getPanacheEntityType().getMethod("find", String.class, Sort.class, Map.class)
@@ -80,7 +80,7 @@ public final class ListRangedMethodImplementor extends StandardMethodImplementor
         //addLinksAnnotation(methodCreator, resourceInfo.getEntityClassName(), REL);
 
         AssignableResultHandle sort = methodCreator.createVariable(Sort.class);
-        methodCreator.assign(sort, methodCreator.invokeStaticMethod(ofMethod(SortBuilder.class, "sort", Sort.class, String.class), methodCreator.getMethodParam(2)));
+        methodCreator.assign(sort, methodCreator.invokeStaticMethod(ofMethod(SortBuilder.class, "build", Sort.class, String.class), methodCreator.getMethodParam(2)));
 
         AssignableResultHandle filter = createFilter(methodCreator);
 
