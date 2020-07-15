@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 public class SortBuilder {
 
-    public static Sort sort(@NotNull String sortBy) {
+    public static Sort build(@NotNull String sortBy) {
         final String[] sortingColumnsAndDirections = sortBy.split(",");
         Sort sort = Sort.by();
         for (String sortingColumnsAndDirection : sortingColumnsAndDirections) {

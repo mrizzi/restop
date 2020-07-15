@@ -44,7 +44,7 @@ public interface ReadablePaginatedByRangeWithDto<E extends PanacheEntity, DTO> e
                                           @QueryParam(QUERY_PARAM_WHERE) @DefaultValue(DEFAULT_VALUE_WHERE) String where,
                                           @Context UriInfo uriInfo) throws Exception
     {
-        Sort sort = SortBuilder.sort(sortBy);
+        Sort sort = SortBuilder.build(sortBy);
         Filter filter = FilterBuilder.withUriInfo(uriInfo).andWhere(where).build();
         @SuppressWarnings("unchecked")
         PanacheQuery<E> query = (PanacheQuery<E>) getPanacheEntityType().getMethod("find", String.class, Sort.class, Map.class)
